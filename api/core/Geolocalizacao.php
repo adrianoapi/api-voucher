@@ -3,7 +3,7 @@
 class Geolocalizacao
 {
 
-    private $key = "AIzaSyDH-enwqlfRfq1Eb4pmuzAcr4ug3S-GxHw";
+    public $key = "AIzaSyDH-enwqlfRfq1Eb4pmuzAcr4ug3S-GxHw";
     private $endereco;
     private $estrutura;
 
