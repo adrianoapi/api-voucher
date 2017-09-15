@@ -6,6 +6,6 @@ Esse aplicativo foi desenvolvido para ser utilizado como uma única requisição
 É aqui que toda ação principal do App ocorre, pois é através dela que são feitas as requisições de classes e métodos que irão gerar conteúdo de interação para o usuário.
 
 ## Implementação
->Na linha 156 da index, altere de `$mail->setMailTo("xpto@gmail.com")` para `$mail->setMailTo($inputUnidade[0]['email'])`
+>Na index.php, altere de `$mail->setMailTo("xpto@gmail.com")` para `$mail->setMailTo($inputUnidade[0]['email'])`
 
->No arquivo library/PHPMailer-master/send.php, altere a senha no atributo $sndmail->Password = "****";
+>No arquivo library/PHPMailer-master/send.php, altere a senha no atributo `$sndmail->Password` para autenticação no serivdor de e-mail;

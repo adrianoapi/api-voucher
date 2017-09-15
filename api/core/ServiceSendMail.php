@@ -5,18 +5,17 @@ class ServiceSendMail
 
     private $mail;
     private $sndmail;
+    private $template;
 
-    public function __construct(ISendMail $mail, $sndmail)
+    public function __construct(ISendMail $mail, $sndmail, $template)
     {
         $this->mail = $mail;
         $this->sndmail = $sndmail;
+        $this->template = $template;
     }
 
     public function send()
     {
-
-//        date_default_timezone_set('Etc/UTC');
-
         $msg = $this->mail->getMailMsg();
         $this->sndmail->setFrom($this->mail->getMailFrom(), utf8_decode('Contato Evolutime'));
         $this->sndmail->addAddress($this->mail->getMailTo(), 'Contato Evolutime');
@@ -27,24 +26,7 @@ class ServiceSendMail
         }
         $this->sndmail->addCc($this->mail->getMailCc(), $msg['nome']);
         $this->sndmail->Subject = utf8_decode($this->mail->getMailSubject());
-        $this->sndmail->msgHTML("Cupom gerado com sucesso!<br/>" .
-                "curso: <strong>" . $msg['curso'] . "</strong>" .
-                "<p>&nbsp;</p>" .
-                utf8_decode("especialização: <strong>") . $msg['especializacao'] . "</strong>" .
-                "<p>&nbsp;</p>" .
-                utf8_decode("profissão: <strong>") . $msg['profissao'] . "</strong>" .
-                "<p>&nbsp;</p>" .
-                utf8_decode("endereço: ") . $msg['endereco']['cep'] . " - " . $msg['endereco']['endereco'] . " - " . $msg['endereco']['bairro'] . " - " . $msg['endereco']['cidade'] . "/" . $msg['endereco']['estado'] .
-                "<br>telefone: " . $msg['endereco']['telefone'] .
-                "<p>&nbsp;</p>" .
-                "nome: <strong>" . utf8_decode($msg['nome']) . "</strong><br/>" .
-                "e-mail: <strong>{$msg['email']}</strong><br/>" .
-                "telefone: <strong>{$msg['telefone']}</strong><br/>" .
-                "<p>&nbsp;</p>" .
-                "voucher: <strong>{$msg['voucher']}</strong> - " .
-                utf8_decode("válido até {$msg['validade']}<br/>")
-        );
-
+        $this->sndmail->msgHTML($this->template->getEmail($msg));
         if (!$this->sndmail->send()) {
             echo $this->sndmail->ErrorInfo . "<br/>";
         } else {

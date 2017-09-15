@@ -19,10 +19,10 @@ $curso = new Curso();
 $objCurso = new ServiceCurso($db, $curso);
 $profissao = new Profissao();
 $objProfissao = new ServiceProfissao($db, $profissao);
-$mail = new SendMail();
-$objMail = new ServiceSendMail($mail, $sndmail);
-$helper = new Helper();
 $template = new Template();
+$mail = new SendMail();
+$objMail = new ServiceSendMail($mail, $sndmail, $template);
+$helper = new Helper();
 
 if (isset($_GET['unidade'])) {
     $div = @$_GET['div'] != '' ? $_GET['div'] : 0;
