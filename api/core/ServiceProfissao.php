@@ -22,7 +22,7 @@ class ServiceProfissao
 
     public function find($id)
     {
-        $query = "SELECT * FROM `profissoes` WHERE `id`=:id";
+        $query = "SELECT * FROM `profissoes` WHERE `id`=:id LIMIT 1";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":id", $id);
         $stmt->execute();

@@ -155,7 +155,7 @@ if (isset($_GET['unidade'])) {
                 #$mail->setMailTo($inputUnidade[0]['email']) # envio p/ unidade
                 $mail->setMailTo("sdcomputadores@gmail.com") # envo p/ teste
                         ->setMailFrom("adriano.costa@grupolaunic.com.br") # remetente  
-                        ->setMailCc($email) # cop. cliente
+                        ->setMailCc($email) # cop. cliente # destinatário
                         ->setMailBcc("php.sql5@gmail.com") # cop. oculta
                         ->setMailSubject("Cadastro Voucher: " . $codVoucher)
                         ->setMailMsg($msgContent);

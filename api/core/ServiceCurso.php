@@ -26,7 +26,7 @@ class ServiceCurso
 
     public function find($id)
     {
-        $query = "SELECT * FROM `cursos` WHERE `id`=:id";
+        $query = "SELECT * FROM `cursos` WHERE `id`=:id LIMIT 1";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":id", $id);
         $stmt->execute();
