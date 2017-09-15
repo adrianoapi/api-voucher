@@ -138,6 +138,8 @@ if (isset($_GET['unidade'])) {
                 $objCliente->update();
                 # Dispara e-mail
                 $rstCurso = $objCurso->find($curso);
+                $rstEspecializacao = $objCurso->find($especializacao);
+                $rstProfissao = $objProfissao->find($profissao);
                 $msgContent = array();
                 $msgContent['divulgador_email'] = count($inputDivulgador) > 0 ? $inputDivulgador[0]['email'] : NULL;
                 $msgContent['endereco'] = $end_page;
@@ -146,6 +148,8 @@ if (isset($_GET['unidade'])) {
                 $msgContent['telefone'] = $telefone;
                 $msgContent['periodo'] = $periodo;
                 $msgContent['curso'] = $rstCurso[0]['nome'];
+                $msgContent['especializacao'] = $rstEspecializacao[0]['nome'];
+                $msgContent['profissao'] = $rstProfissao[0]['nome'];
                 $msgContent['voucher'] = $codVoucher;
                 $msgContent['validade'] = $helper->dataBr($valDate);
                 #$mail->setMailTo($inputUnidade[0]['email']) # envio p/ unidade
