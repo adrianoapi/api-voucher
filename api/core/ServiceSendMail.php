@@ -18,8 +18,8 @@ class ServiceSendMail
 //        date_default_timezone_set('Etc/UTC');
 
         $msg = $this->mail->getMailMsg();
-        $this->sndmail->setFrom($this->mail->getMailFrom(), utf8_decode('Contado Evolutime'));
-        $this->sndmail->addAddress($this->mail->getMailTo(), 'Contado Evolutime');
+        $this->sndmail->setFrom($this->mail->getMailFrom(), utf8_decode('Contato Evolutime'));
+        $this->sndmail->addAddress($this->mail->getMailTo(), 'Contato Evolutime');
         if (isset($msg['divulgador_email'])) {
             $this->sndmail->addBcc($msg['divulgador_email']);
         } else {
