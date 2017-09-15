@@ -9,6 +9,13 @@ require_once 'api/library/PHPMailer-master/send.php';
 require_once 'Helper.php';
 $db = new Conn("localhost", "promo_cadastro", "root", "");
 
+//$xml = 
+//$latitude = $xml->result->geometry->location->lat;
+//echo "<pre>";
+//echo ($latitude);
+//echo "</pre>";
+//die();
+
 $cliente = new Cliente();
 $objCliente = new ServiceCliente($db, $cliente);
 $divulgador = new Divulgador();
@@ -23,6 +30,7 @@ $template = new Template();
 $mail = new SendMail();
 $objMail = new ServiceSendMail($mail, $sndmail, $template);
 $helper = new Helper();
+$geo = new Geolocalizacao();
 
 if (isset($_GET['unidade'])) {
     $div = @$_GET['div'] != '' ? $_GET['div'] : 0;
@@ -39,6 +47,11 @@ if (isset($_GET['unidade'])) {
     $end_page['bairro'] = $inputUnidade[0]['bairro'];
     $end_page['cidade'] = $inputUnidade[0]['cidade'];
     $end_page['estado'] = $inputUnidade[0]['estado'];
+    # Pega a latitude
+    $geo->setEndereco(utf8_decode("{$end_page['endereco']} - {$end_page['bairro']} - {$end_page['estado']}"));
+    $geo->setLocalizacao();
+    $end_page['latitude'] = $geo->getLatitude();
+    $end_page['longitude'] = $geo->getLongitude();
     # Caso o formulário tenha sido executado
     if (isset($_GET['action'])) {
         if ($_POST) {
