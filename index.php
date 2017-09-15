@@ -53,10 +53,6 @@ if (isset($_GET['unidade'])) {
     $end_page['latitude'] = $geo->getLatitude();
     $end_page['longitude'] = $geo->getLongitude();
     $end_page['geo_key'] = $geo->key;
-    echo "<pre>";
-    print_r($end_page);
-    echo "</pre>";
-    die();
     # Caso o formulário tenha sido executado
     if (isset($_GET['action'])) {
         if ($_POST) {
