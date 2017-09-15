@@ -17,6 +17,8 @@ $unidade = new Unidade();
 $objUnidade = new ServiceUnidade($db, $unidade);
 $curso = new Curso();
 $objCurso = new ServiceCurso($db, $curso);
+$profissao = new Profissao();
+$objProfissao = new ServiceProfissao($db, $profissao);
 $mail = new SendMail();
 $objMail = new ServiceSendMail($mail, $sndmail);
 $helper = new Helper();
@@ -46,11 +48,23 @@ if (isset($_GET['unidade'])) {
             $email = isset($_POST['email']) ? $_POST['email'] : NULL;
             $telefone = isset($_POST['telefone']) ? $_POST['telefone'] : NULL;
             $curso = isset($_POST['curso']) ? $_POST['curso'] : NULL;
+            $especializacao = isset($_POST['especializacao']) ? $_POST['especializacao'] : NULL;
+            $profissao = isset($_POST['profissao']) ? $_POST['profissao'] : NULL;
             $periodo = isset($_POST['periodo']) ? $_POST['periodo'] : NULL;
             $strCurso = "<option value=\"\">Escolha um curso</option>";
-            foreach ($objCurso->show() as $value):
+            foreach ($objCurso->show('padrao') as $value):
                 $select = ($value['id'] == $curso) ? " selected=\"selected\"" : "";
                 $strCurso .= "<option value=\"{$value['id']}\"{$select}>" . utf8_encode($value['nome']) . "</option>";
+            endforeach;
+            $strEspecializacao = "<option value=\"\">Escolha uma especialização</option>";
+            foreach ($objCurso->show('especializacao') as $value):
+                $select = ($value['id'] == $especializacao) ? " selected=\"selected\"" : "";
+                $strEspecializacao .= "<option value=\"{$value['id']}\"{$select}>" . utf8_encode($value['nome']) . "</option>";
+            endforeach;
+            $strProfissao = "<option value=\"\">Escolha uma profissão</option>";
+            foreach ($objProfissao->show() as $value):
+                $select = ($value['id'] == $profissao) ? " selected=\"selected\"" : "";
+                $strProfissao .= "<option value=\"{$value['id']}\"{$select}>" . utf8_encode($value['nome']) . "</option>";
             endforeach;
             # Confere se todos os campos foram preenchidos
             $arrError = array();
@@ -70,6 +84,12 @@ if (isset($_GET['unidade'])) {
             if ($curso == NULL) {
                 $arrError[] = "Selecione um <strong>curso</strong><br/>";
             }
+            if ($especializacao == NULL) {
+                $arrError[] = "Selecione um <strong>especialização</strong><br/>";
+            }
+            if ($profissao == NULL) {
+                $arrError[] = "Selecione uma <strong>profissão</strong><br/>";
+            }
             if ($periodo == NULL) {
                 $arrError[] = "Escolha um <strong>período</strong><br/>";
             }
@@ -88,6 +108,8 @@ if (isset($_GET['unidade'])) {
                 $page = str_replace("%EMAIL%", $email, $page);
                 $page = str_replace("%TELEFONE%", $telefone, $page);
                 $page = str_replace("%CURSO-SELECT%", $strCurso, $page);
+                $page = str_replace("%ESPECIALIZACAO-SELECT%", $strEspecializacao, $page);
+                $page = str_replace("%PROFISSAO-SELECT%", $strProfissao, $page);
                 $page = str_replace("%CHECKED-M%", ($periodo == "M") ? 'checked="checked"' : "", $page);
                 $page = str_replace("%CHECKED-T%", ($periodo == "T") ? 'checked="checked"' : "", $page);
                 $page = str_replace("%CHECKED-N%", ($periodo == "N") ? 'checked="checked"' : "", $page);
@@ -102,6 +124,8 @@ if (isset($_GET['unidade'])) {
                         ->setUnidadeId($unidade)
                         ->setDivulgadorId($divulgador_id)
                         ->setCursoId($curso)
+                        ->setEspecializacaoId($especializacao)
+                        ->setProfissaoId($profissao)
                         ->setPeriodo($periodo)
                         ->setDate($cadDate)
                         ->setVencimento($valDate);
@@ -149,8 +173,16 @@ if (isset($_GET['unidade'])) {
         }
     } else { # Então retorna o formulário limpo
         $strCurso = "<option value=\"\">Escolha um curso</option>";
-        foreach ($objCurso->show() as $curso):
+        foreach ($objCurso->show('padrao') as $curso):
             $strCurso .= "<option value=\"{$curso['id']}\">" . utf8_encode($curso['nome']) . "</option>";
+        endforeach;
+        $strEspecializacao = "<option value=\"\">Escolha um curso</option>";
+        foreach ($objCurso->show('especializacao') as $curso):
+            $strEspecializacao .= "<option value=\"{$curso['id']}\">" . utf8_encode($curso['nome']) . "</option>";
+        endforeach;
+        $strProfissao = "<option value=\"\">Escolha uma profissão</option>";
+        foreach ($objProfissao->show() as $value):
+            $strProfissao .= "<option value=\"{$value['id']}\">" . utf8_encode($value['nome']) . "</option>";
         endforeach;
         $page = $template->getCadastro();
         $page = str_replace("%ERROR-MSG%", "", $page);
@@ -161,6 +193,8 @@ if (isset($_GET['unidade'])) {
         $page = str_replace("%EMAIL%", "", $page);
         $page = str_replace("%TELEFONE%", "", $page);
         $page = str_replace("%CURSO-SELECT%", $strCurso, $page);
+        $page = str_replace("%ESPECIALIZACAO-SELECT%", $strEspecializacao, $page);
+        $page = str_replace("%PROFISSAO-SELECT%", $strProfissao, $page);
         $page = str_replace("%CHECKED-M%", 'checked="checked"', $page);
         $page = str_replace("%CHECKED-T%", "", $page);
         $page = str_replace("%CHECKED-N%", "", $page);

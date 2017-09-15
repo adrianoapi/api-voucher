@@ -12,9 +12,13 @@ class ServiceCurso
         $this->curso = $curso;
     }
 
-    public function show()
+    public function show($tipo = null)
     {
-        $query = "SELECT * FROM `cursos` WHERE status = '1'";
+        if ($tipo) {
+            $query = "SELECT * FROM `cursos` WHERE tipo = '{$tipo}' AND status = '1'";
+        } else {
+            $query = "SELECT * FROM `cursos` WHERE status = '1'";
+        }
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);

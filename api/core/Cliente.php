@@ -11,6 +11,8 @@ class Cliente implements ICliente
     private $unidadeId;
     private $divugadorId;
     private $cursoId;
+    private $especializacaoId;
+    private $profissaoId;
     private $periodo;
     private $date;
     private $vencimento;
@@ -100,6 +102,28 @@ class Cliente implements ICliente
     public function setCursoId($cursoId)
     {
         $this->cursoId = $cursoId;
+        return $this;
+    }
+
+    public function getEspecializacaoId()
+    {
+        return $this->especializacaoId;
+    }
+
+    public function setEspecializacaoId($especializacaoId)
+    {
+        $this->especializacaoId = $especializacaoId;
+        return $this;
+    }
+
+    public function getProfissaoId()
+    {
+        return $this->profissaoId;
+    }
+
+    public function setProfissaoId($profissaoId)
+    {
+        $this->profissaoId = $profissaoId;
         return $this;
     }
 

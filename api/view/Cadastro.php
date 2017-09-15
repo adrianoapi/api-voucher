@@ -31,6 +31,16 @@ class Cadastro
                         %CURSO-SELECT%
                     </select>
                 </p>
+                <p><label class="field" for="curso">especialização:</label>
+                    <select name="especializacao">
+                        %ESPECIALIZACAO-SELECT%
+                    </select>
+                </p>
+                <p><label class="field" for="curso">profissão:</label>
+                    <select name="profissao">
+                        %PROFISSAO-SELECT%
+                    </select>
+                </p>
                 <p>
                     <label class="field" for="periodo">Período:</label>
                     <label class="sexo"><input type="radio" name="periodo" value="M"%CHECKED-M%>Manhã</label>

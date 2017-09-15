@@ -40,7 +40,7 @@ class ServiceCliente
 
     public function save()
     {
-        $query = "insert into `clientes` (`nome`,`email`,`telefone`,`unidade_id`,`divulgador_id`,`curso_id`,`periodo`,`date`,`vencimento`) values (:nome,:email,:telefone,:unidade_id,:divulgador_id,:curso_id,:periodo,:date,:vencimento)";
+        $query = "insert into `clientes` (`nome`,`email`,`telefone`,`unidade_id`,`divulgador_id`,`curso_id`, `especializacao_id`,`profissao_id`,`periodo`,`date`,`vencimento`) values (:nome,:email,:telefone,:unidade_id,:divulgador_id,:curso_id,:especializacao_id,:profissao_id,:periodo,:date,:vencimento)";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(":nome", $this->cliente->getNome());
         $stmt->bindValue(":email", $this->cliente->getEmail());
@@ -48,6 +48,8 @@ class ServiceCliente
         $stmt->bindValue(":unidade_id", $this->cliente->getUnidadeId());
         $stmt->bindValue(":divulgador_id", $this->cliente->getDivulgadorId());
         $stmt->bindValue(":curso_id", $this->cliente->getCursoId());
+        $stmt->bindValue(":especializacao_id", $this->cliente->getEspecializacaoId());
+        $stmt->bindValue(":profissao_id", $this->cliente->getProfissaoId());
         $stmt->bindValue(":periodo", $this->cliente->getPeriodo());
         $stmt->bindValue(":date", $this->cliente->getDate());
         $stmt->bindValue(":vencimento", $this->cliente->getVencimento());

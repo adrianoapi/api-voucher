@@ -18,6 +18,10 @@ interface ICliente
     public function setDivulgadorId($divulgadorId);
     public function getCursoId();
     public function setCUrsoId($cursoId);
+    public function getEspecializacaoId();
+    public function setEspecializacaoId($especializacaoId);
+    public function getProfissaoId();
+    public function setProfissaoId($profissaoId);
     public function getPeriodo();
     public function setPeriodo($periodo);
     public function getDate();
