@@ -9,3 +9,5 @@ Esse aplicativo foi desenvolvido para ser utilizado como uma única requisição
 >Na index.php, altere de `$mail->setMailTo("xpto@gmail.com")` para `$mail->setMailTo($inputUnidade[0]['email'])`
 
 >No arquivo library/PHPMailer-master/send.php, altere a senha no atributo `$sndmail->Password` para autenticação no serivdor de e-mail;
+
+>Na index.php é criado o array `$end_page` que contém os dados da unidade (telefone, cep, endereco, bairro, cidade e estado)
