@@ -61,6 +61,7 @@ and open the template in the editor.
             ctx.fillText("Válido até %DATE%", 10, 95);
 
         </script>
+        <img src="http://maps.google.com/maps/api/staticmap?center=%LATITUDE%,%LONGITUDE%&zoom=16&size=600x400&maptype=roadmap&sensor=false&language=&markers=color:red|label:none|%LATITUDE%,%LONGITUDE%" width="600" height="400" style="border:1px solid #CECECE;">
     </body>
 </html>';
     }

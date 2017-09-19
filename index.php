@@ -178,7 +178,8 @@ if (isset($_GET['unidade'])) {
                 $voucherPage = str_replace("%NOME%", $nome, $voucherPage);
                 $voucherPage = str_replace("%CURSO%", utf8_encode($rstCurso[0]['nome']), $voucherPage);
                 $voucherPage = str_replace("%CODIGO-VOUCHER%", $codVoucher, $voucherPage);
-                $voucherPage = str_replace("%DATE%", $helper->dataBr($valDate), $voucherPage);
+                $voucherPage = str_replace("%LONGITUDE%", $end_page['longitude'], $voucherPage);
+                $voucherPage = str_replace("%LATITUDE%", $end_page['latitude'], $voucherPage);
                 # Retorna a confirmação de envio
                 echo $voucherPage;
                 #Para o Designer remover em produção
