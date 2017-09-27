@@ -9,13 +9,11 @@ require_once 'api/library/PHPMailer-master/send.php';
 require_once 'Helper.php';
 $db = new Conn("localhost", "promo_cadastro", "root", "");
 
-//$xml = 
 //$latitude = $xml->result->geometry->location->lat;
-//echo "<pre>";
-//echo ($latitude);
-//echo "</pre>";
-//die();
 
+/**
+ * Instanciamento de das classes
+ */
 $cliente = new Cliente();
 $objCliente = new ServiceCliente($db, $cliente);
 $divulgador = new Divulgador();
@@ -33,26 +31,31 @@ $helper = new Helper();
 $geo = new Geolocalizacao();
 
 if (isset($_GET['unidade'])) {
+    # Condição de tratamento do REQUEST divulgador
     $div = @$_GET['div'] != '' ? $_GET['div'] : 0;
     $div = isset($_POST['divulgador']) ? $_POST['divulgador'] : $div;
+
     # Retorna página em branco
     $divulgador->setId($div);
     $inputDivulgador = $objDivulgador->select();
     $unidade->setAlias($helper->sanitizeString($_GET['unidade']));
     $inputUnidade = $objUnidade->findByAlias();
-    #Variaveis para montar o endereco
+
+    # Variaveis para montar o endereco
     $end_page['telefone'] = $inputUnidade[0]['telefone'];
     $end_page['cep'] = $inputUnidade[0]['cep'];
     $end_page['endereco'] = $inputUnidade[0]['endereco'];
     $end_page['bairro'] = $inputUnidade[0]['bairro'];
     $end_page['cidade'] = $inputUnidade[0]['cidade'];
     $end_page['estado'] = $inputUnidade[0]['estado'];
+
     # Pega a latitude
     $geo->setEndereco(utf8_decode("{$end_page['endereco']} - {$end_page['bairro']} - {$end_page['estado']}"));
     $geo->setLocalizacao();
     $end_page['latitude'] = $geo->getLatitude();
     $end_page['longitude'] = $geo->getLongitude();
     $end_page['geo_key'] = $geo->key;
+
     # Caso o formulário tenha sido executado
     if (isset($_GET['action'])) {
         if ($_POST) {
@@ -80,6 +83,7 @@ if (isset($_GET['unidade'])) {
                 $select = ($value['id'] == $profissao) ? " selected=\"selected\"" : "";
                 $strProfissao .= "<option value=\"{$value['id']}\"{$select}>" . utf8_encode($value['nome']) . "</option>";
             endforeach;
+
             # Confere se todos os campos foram preenchidos
             $arrError = array();
             if ($nome == NULL) {
@@ -107,6 +111,7 @@ if (isset($_GET['unidade'])) {
             if ($periodo == NULL) {
                 $arrError[] = "Escolha um <strong>período</strong><br/>";
             }
+
             # Se ocorreu algum erro
             if (count($arrError) > 0) {
                 $strMsg = NULL;
@@ -129,7 +134,7 @@ if (isset($_GET['unidade'])) {
                 $page = str_replace("%CHECKED-N%", ($periodo == "N") ? 'checked="checked"' : "", $page);
                 echo $page;
             } else {
-                # Salva o cadastro
+                # Então salva o cadastro
                 $cadDate = date('Y-m-d');
                 $valDate = date('Y-m-d', strtotime($cadDate . ' + 7 days'));
                 $cliente->setNome(utf8_decode($nome))
@@ -144,13 +149,15 @@ if (isset($_GET['unidade'])) {
                         ->setDate($cadDate)
                         ->setVencimento($valDate);
                 $clienteId = $objCliente->save();
+
                 # Insere o voucher no cadastro
                 $codVoucher = $helper->voucherCodigo($clienteId, $inputUnidade[0]['sigla']);
                 $codVoucher = isset($codVoucher) ? $codVoucher : $inputUnidade[0]['sigla'] . "-ND" . $clienteId;
                 $cliente->setId($clienteId)
                         ->setCodVoucher($codVoucher);
                 $objCliente->update();
-                # Dispara e-mail
+
+                # Seta e dispara e-mails
                 $rstCurso = $objCurso->find($curso);
                 $rstEspecializacao = $objCurso->find($especializacao);
                 $rstProfissao = $objProfissao->find($profissao);
@@ -180,14 +187,15 @@ if (isset($_GET['unidade'])) {
                 $voucherPage = str_replace("%CODIGO-VOUCHER%", $codVoucher, $voucherPage);
                 $voucherPage = str_replace("%LONGITUDE%", $end_page['longitude'], $voucherPage);
                 $voucherPage = str_replace("%LATITUDE%", $end_page['latitude'], $voucherPage);
+
+                # Para o Designer remover em produção
+                # Begin
                 # Retorna a confirmação de envio
                 echo $voucherPage;
-                #Para o Designer remover em produção
-                #Begin
                 echo "<pre>";
                 print_r($end_page);
                 echo "</pre>";
-                #End
+                # End
             }
         }
     } else { # Então retorna o formulário limpo
@@ -222,9 +230,11 @@ if (isset($_GET['unidade'])) {
 }else {
     echo "<h1>Erro:</h1>";
     echo "<h3>Nenhuma unidade foi informada!</h3>";
-//    echo "<p>Por favor, selecione uma unidade da lista abaixo:</p>";
-//    foreach ($objUnidade->show() as $unidade):
-//        echo "<a href=\"?unidade={$unidade['alias']}\">" . utf8_encode($unidade['nome']) . "</a><br/>";
-//    endforeach;
+    /*
+      echo "<p>Por favor, selecione uma unidade da lista abaixo:</p>";
+      foreach ($objUnidade->show() as $unidade):
+      echo "<a href=\"?unidade={$unidade['alias']}\">" . utf8_encode($unidade['nome']) . "</a><br/>";
+      endforeach;
+     */
 }
 ?>
