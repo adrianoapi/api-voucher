@@ -14,21 +14,21 @@ $db = new Conn("localhost", "promo_cadastro", "root", "");
 /**
  * Instanciamento de das classes
  */
-$cliente = new Cliente();
-$objCliente = new ServiceCliente($db, $cliente);
-$divulgador = new Divulgador();
+$cliente       = new Cliente();
+$objCliente    = new ServiceCliente($db, $cliente);
+$divulgador    = new Divulgador();
 $objDivulgador = new ServiceDivulgador($db, $divulgador);
-$unidade = new Unidade();
-$objUnidade = new ServiceUnidade($db, $unidade);
-$curso = new Curso();
-$objCurso = new ServiceCurso($db, $curso);
-$profissao = new Profissao();
-$objProfissao = new ServiceProfissao($db, $profissao);
-$template = new Template();
-$mail = new SendMail();
-$objMail = new ServiceSendMail($mail, $sndmail, $template);
-$helper = new Helper();
-$geo = new Geolocalizacao();
+$unidade       = new Unidade();
+$objUnidade    = new ServiceUnidade($db, $unidade);
+$curso         = new Curso();
+$objCurso      = new ServiceCurso($db, $curso);
+$profissao     = new Profissao();
+$objProfissao  = new ServiceProfissao($db, $profissao);
+$template      = new Template();
+$mail          = new SendMail();
+$objMail       = new ServiceSendMail($mail, $sndmail, $template);
+$helper        = new Helper();
+$geo           = new Geolocalizacao();
 
 if (isset($_GET['unidade'])) {
     # Condição de tratamento do REQUEST divulgador
@@ -173,11 +173,11 @@ if (isset($_GET['unidade'])) {
                 $msgContent['profissao']        = $rstProfissao[0]['nome'];
                 $msgContent['voucher']          = $codVoucher;
                 $msgContent['validade']         = $helper->dataBr($valDate);
-                #$mail->setMailTo($inputUnidade[0]['email']) # envio p/ unidade
-                $mail->setMailTo("sdcomputadores@gmail.com") # envo p/ teste
-                        ->setMailFrom("adriano.costa@grupolaunic.com.br") # remetente  
-                        ->setMailCc($email) # cop. cliente # destinatário
-                        ->setMailBcc("php.sql5@gmail.com") # cop. oculta
+                #$mail->setMailTo($inputUnidade[0]['email']                ) # envio p/ unidade
+                $mail->setMailTo("sdcomputadores@gmail.com"                ) # envo p/ teste
+                        ->setMailFrom("adriano.costa@grupolaunic.com.br"   ) # remetente  
+                        ->setMailCc($email                                 ) # cop. cliente # destinatário
+                        ->setMailBcc("php.sql5@gmail.com"                  ) # cop. oculta
                         ->setMailSubject("Cadastro Voucher: " . $codVoucher)
                         ->setMailMsg($msgContent);
                 $objMail->send();
