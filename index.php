@@ -119,19 +119,19 @@ if (isset($_GET['unidade'])) {
                     $strMsg .=$value;
                 endforeach;
                 $page = $template->getCadastro();
-                $page = str_replace("%ERROR-MSG%", "<h3>Erro no preenchimento do formulário!</h3>" . $strMsg, $page);
-                $page = str_replace("%UNIDADE-ALIAS%", $inputUnidade[0]['alias'], $page);
-                $page = str_replace("%UNIDADE-ID%", $inputUnidade[0]['id'], $page);
-                $page = str_replace("%DIVULGADOR-ID%", $divulgador_id, $page);
-                $page = str_replace("%NOME%", $nome, $page);
-                $page = str_replace("%EMAIL%", $email, $page);
-                $page = str_replace("%TELEFONE%", $telefone, $page);
-                $page = str_replace("%CURSO-SELECT%", $strCurso, $page);
-                $page = str_replace("%ESPECIALIZACAO-SELECT%", $strEspecializacao, $page);
-                $page = str_replace("%PROFISSAO-SELECT%", $strProfissao, $page);
-                $page = str_replace("%CHECKED-M%", ($periodo == "M") ? 'checked="checked"' : "", $page);
-                $page = str_replace("%CHECKED-T%", ($periodo == "T") ? 'checked="checked"' : "", $page);
-                $page = str_replace("%CHECKED-N%", ($periodo == "N") ? 'checked="checked"' : "", $page);
+                $page = str_replace("%ERROR-MSG%"            , "<h3>Erro no preenchimento do formulário!</h3>" . $strMsg, $page);
+                $page = str_replace("%UNIDADE-ALIAS%"        , $inputUnidade[0]['alias'], $page);
+                $page = str_replace("%UNIDADE-ID%"           , $inputUnidade[0]['id']   , $page);
+                $page = str_replace("%DIVULGADOR-ID%"        , $divulgador_id           , $page);
+                $page = str_replace("%NOME%"                 , $nome                    , $page);
+                $page = str_replace("%EMAIL%"                , $email                   , $page);
+                $page = str_replace("%TELEFONE%"             , $telefone                , $page);
+                $page = str_replace("%CURSO-SELECT%"         , $strCurso                , $page);
+                $page = str_replace("%ESPECIALIZACAO-SELECT%", $strEspecializacao       , $page);
+                $page = str_replace("%PROFISSAO-SELECT%"     , $strProfissao            , $page);
+                $page = str_replace("%CHECKED-M%"            , ($periodo == "M") ? 'checked="checked"' : "", $page);
+                $page = str_replace("%CHECKED-T%"            , ($periodo == "T") ? 'checked="checked"' : "", $page);
+                $page = str_replace("%CHECKED-N%"            , ($periodo == "N") ? 'checked="checked"' : "", $page);
                 echo $page;
             } else {
                 # Então salva o cadastro
@@ -182,11 +182,11 @@ if (isset($_GET['unidade'])) {
                         ->setMailMsg($msgContent);
                 $objMail->send();
                 $voucherPage = $template->getVoucher();
-                $voucherPage = str_replace("%NOME%", $nome, $voucherPage);
-                $voucherPage = str_replace("%CURSO%", utf8_encode($rstCurso[0]['nome']), $voucherPage);
-                $voucherPage = str_replace("%CODIGO-VOUCHER%", $codVoucher, $voucherPage);
-                $voucherPage = str_replace("%LONGITUDE%", $end_page['longitude'], $voucherPage);
-                $voucherPage = str_replace("%LATITUDE%", $end_page['latitude'], $voucherPage);
+                $voucherPage = str_replace("%NOME%"          , $nome                , $voucherPage);
+                $voucherPage = str_replace("%CURSO%"         , utf8_encode($rstCurso[0]['nome']), $voucherPage);
+                $voucherPage = str_replace("%CODIGO-VOUCHER%", $codVoucher           , $voucherPage);
+                $voucherPage = str_replace("%LONGITUDE%"     , $end_page['longitude'], $voucherPage);
+                $voucherPage = str_replace("%LATITUDE%"      , $end_page['latitude'] , $voucherPage);
 
                 # Para o Designer remover em produção
                 # Begin
@@ -212,19 +212,19 @@ if (isset($_GET['unidade'])) {
             $strProfissao .= "<option value=\"{$value['id']}\">" . utf8_encode($value['nome']) . "</option>";
         endforeach;
         $page = $template->getCadastro();
-        $page = str_replace("%ERROR-MSG%", "", $page);
-        $page = str_replace("%UNIDADE-ALIAS%", $inputUnidade[0]['alias'], $page);
-        $page = str_replace("%UNIDADE-ID%", $inputUnidade[0]['id'], $page);
-        $page = str_replace("%DIVULGADOR-ID%", isset($inputDivulgador[0]['id']) ? $inputDivulgador[0]['id'] : 0, $page);
-        $page = str_replace("%NOME%", "", $page);
-        $page = str_replace("%EMAIL%", "", $page);
-        $page = str_replace("%TELEFONE%", "", $page);
-        $page = str_replace("%CURSO-SELECT%", $strCurso, $page);
-        $page = str_replace("%ESPECIALIZACAO-SELECT%", $strEspecializacao, $page);
-        $page = str_replace("%PROFISSAO-SELECT%", $strProfissao, $page);
-        $page = str_replace("%CHECKED-M%", 'checked="checked"', $page);
-        $page = str_replace("%CHECKED-T%", "", $page);
-        $page = str_replace("%CHECKED-N%", "", $page);
+        $page = str_replace("%ERROR-MSG%"            , ""                 , $page);
+        $page = str_replace("%UNIDADE-ALIAS%"        , $inputUnidade[0]['alias'], $page);
+        $page = str_replace("%UNIDADE-ID%"           , $inputUnidade[0]['id'], $page);
+        $page = str_replace("%DIVULGADOR-ID%"        , isset($inputDivulgador[0]['id']) ? $inputDivulgador[0]['id'] : 0, $page);
+        $page = str_replace("%NOME%"                 , ""                 , $page);
+        $page = str_replace("%EMAIL%"                , ""                 , $page);
+        $page = str_replace("%TELEFONE%"             , ""                 , $page);
+        $page = str_replace("%CURSO-SELECT%"         , $strCurso          , $page);
+        $page = str_replace("%ESPECIALIZACAO-SELECT%", $strEspecializacao , $page);
+        $page = str_replace("%PROFISSAO-SELECT%"     , $strProfissao      , $page);
+        $page = str_replace("%CHECKED-M%"            , 'checked="checked"', $page);
+        $page = str_replace("%CHECKED-T%"            , ""                 , $page);
+        $page = str_replace("%CHECKED-N%"            , ""                 , $page);
         echo $page;
     }
 }else {
