@@ -121,7 +121,7 @@ if (isset($_GET['unidade'])) {
                 $page = $template->getCadastro();
                 $page = str_replace("%ERROR-MSG%"            , "<h3>Erro no preenchimento do formulário!</h3>" . $strMsg, $page);
                 $page = str_replace("%UNIDADE-ALIAS%"        , $inputUnidade[0]['alias'], $page);
-                $page = str_replace("%UNIDADE-ID%"           , $inputUnidade[0]['id']   , $page);
+                $page = str_replace("%UNIDADE-ID%"           , $inputUnidade[0]['id'   ], $page);
                 $page = str_replace("%DIVULGADOR-ID%"        , $divulgador_id           , $page);
                 $page = str_replace("%NOME%"                 , $nome                    , $page);
                 $page = str_replace("%EMAIL%"                , $email                   , $page);
@@ -163,16 +163,16 @@ if (isset($_GET['unidade'])) {
                 $rstProfissao = $objProfissao->find($profissao);
                 $msgContent = array();
                 $msgContent['divulgador_email'] = count($inputDivulgador) > 0 ? $inputDivulgador[0]['email'] : NULL;
-                $msgContent['endereco'      ] = $end_page;
-                $msgContent['nome'          ] = $nome;
-                $msgContent['email'         ] = $email;
-                $msgContent['telefone'      ] = $telefone;
-                $msgContent['periodo'       ] = $periodo;
-                $msgContent['curso'         ] = $rstCurso[0]['nome'];
-                $msgContent['especializacao'] = $rstEspecializacao[0]['nome'];
-                $msgContent['profissao'     ] = $rstProfissao[0]['nome'];
-                $msgContent['voucher'       ] = $codVoucher;
-                $msgContent['validade'      ] = $helper->dataBr($valDate);
+                $msgContent['endereco'        ] = $end_page;
+                $msgContent['nome'            ] = $nome;
+                $msgContent['email'           ] = $email;
+                $msgContent['telefone'        ] = $telefone;
+                $msgContent['periodo'         ] = $periodo;
+                $msgContent['curso'           ] = $rstCurso[0]['nome'];
+                $msgContent['especializacao'  ] = $rstEspecializacao[0]['nome'];
+                $msgContent['profissao'       ] = $rstProfissao[0]['nome'];
+                $msgContent['voucher'         ] = $codVoucher;
+                $msgContent['validade'        ] = $helper->dataBr($valDate);
                 #$mail->setMailTo($inputUnidade[0]['email']                ) # envio p/ unidade
                 $mail->setMailTo("sdcomputadores@gmail.com"                ) # envo p/ teste
                         ->setMailFrom("adriano.costa@grupolaunic.com.br"   ) # remetente  
@@ -182,11 +182,11 @@ if (isset($_GET['unidade'])) {
                         ->setMailMsg($msgContent);
                 $objMail->send();
                 $voucherPage = $template->getVoucher();
-                $voucherPage = str_replace("%NOME%"          , $nome                , $voucherPage);
-                $voucherPage = str_replace("%CURSO%"         , utf8_encode($rstCurso[0]['nome']), $voucherPage);
+                $voucherPage = str_replace("%NOME%"          , $nome                 , $voucherPage);
                 $voucherPage = str_replace("%CODIGO-VOUCHER%", $codVoucher           , $voucherPage);
                 $voucherPage = str_replace("%LONGITUDE%"     , $end_page['longitude'], $voucherPage);
-                $voucherPage = str_replace("%LATITUDE%"      , $end_page['latitude'] , $voucherPage);
+                $voucherPage = str_replace("%LATITUDE%"      , $end_page['latitude' ], $voucherPage);
+                $voucherPage = str_replace("%CURSO%"         , utf8_encode($rstCurso[0]['nome']), $voucherPage);
 
                 # Para o Designer remover em produção
                 # Begin
