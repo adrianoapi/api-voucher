@@ -32,7 +32,7 @@ $geo           = new Geolocalizacao();
 
 if (isset($_GET['unidade'])) {
     # Condição de tratamento do REQUEST divulgador
-    $div = @$_GET['div'] != '' ? $_GET['div'] : 0;
+    $div = @$_GET['div'] != ''         ? $_GET['div']         : 0;
     $div = isset($_POST['divulgador']) ? $_POST['divulgador'] : $div;
 
     # Retorna página em branco
@@ -43,31 +43,31 @@ if (isset($_GET['unidade'])) {
 
     # Variaveis para montar o endereco
     $end_page['telefone'] = $inputUnidade[0]['telefone'];
-    $end_page['cep']      = $inputUnidade[0]['cep'];
+    $end_page['cep'     ] = $inputUnidade[0]['cep'     ];
     $end_page['endereco'] = $inputUnidade[0]['endereco'];
-    $end_page['bairro']   = $inputUnidade[0]['bairro'];
-    $end_page['cidade']   = $inputUnidade[0]['cidade'];
-    $end_page['estado']   = $inputUnidade[0]['estado'];
+    $end_page['bairro'  ] = $inputUnidade[0]['bairro'  ];
+    $end_page['cidade'  ] = $inputUnidade[0]['cidade'  ];
+    $end_page['estado'  ] = $inputUnidade[0]['estado'  ];
 
     # Pega a latitude
     $geo->setEndereco(utf8_decode("{$end_page['endereco']} - {$end_page['bairro']} - {$end_page['estado']}"));
     $geo->setLocalizacao();
-    $end_page['latitude']  = $geo->getLatitude();
+    $end_page['latitude' ] = $geo->getLatitude();
     $end_page['longitude'] = $geo->getLongitude();
-    $end_page['geo_key']   = $geo->key;
+    $end_page['geo_key'  ] = $geo->key;
 
     # Caso o formulário tenha sido executado
     if (isset($_GET['action'])) {
         if ($_POST) {
+            $nome           = isset($_POST['nome'          ]) ? $_POST['nome'          ] : NULL;
+            $email          = isset($_POST['email'         ]) ? $_POST['email'         ] : NULL;
+            $telefone       = isset($_POST['telefone'      ]) ? $_POST['telefone'      ] : NULL;
+            $curso          = isset($_POST['curso'         ]) ? $_POST['curso'         ] : NULL;
+            $especializacao = isset($_POST['especializacao']) ? $_POST['especializacao'] : NULL;
+            $profissao      = isset($_POST['profissao'     ]) ? $_POST['profissao'     ] : NULL;
+            $periodo        = isset($_POST['periodo'       ]) ? $_POST['periodo'       ] : NULL;
             $unidade        = isset($_POST['unidade'       ]) && is_numeric($_POST['unidade']) ? $_POST['unidade'] : NULL;
             $divulgador_id  = isset($_POST['divulgador'    ]) && is_numeric($_POST['divulgador']) ? $_POST['divulgador'] : 0;
-            $nome           = isset($_POST['nome'          ]) ? $_POST['nome'] : NULL;
-            $email          = isset($_POST['email'         ]) ? $_POST['email'] : NULL;
-            $telefone       = isset($_POST['telefone'      ]) ? $_POST['telefone'] : NULL;
-            $curso          = isset($_POST['curso'         ]) ? $_POST['curso'] : NULL;
-            $especializacao = isset($_POST['especializacao']) ? $_POST['especializacao'] : NULL;
-            $profissao      = isset($_POST['profissao'     ]) ? $_POST['profissao'] : NULL;
-            $periodo        = isset($_POST['periodo'       ]) ? $_POST['periodo'] : NULL;
             $strCurso       = "<option value=\"\">Escolha um curso</option>";
             foreach ($objCurso->show('padrao') as $value):
                 $select = ($value['id'] == $curso) ? " selected=\"selected\"" : "";
@@ -163,16 +163,16 @@ if (isset($_GET['unidade'])) {
                 $rstProfissao = $objProfissao->find($profissao);
                 $msgContent = array();
                 $msgContent['divulgador_email'] = count($inputDivulgador) > 0 ? $inputDivulgador[0]['email'] : NULL;
-                $msgContent['endereco']         = $end_page;
-                $msgContent['nome']             = $nome;
-                $msgContent['email']            = $email;
-                $msgContent['telefone']         = $telefone;
-                $msgContent['periodo']          = $periodo;
-                $msgContent['curso']            = $rstCurso[0]['nome'];
-                $msgContent['especializacao']   = $rstEspecializacao[0]['nome'];
-                $msgContent['profissao']        = $rstProfissao[0]['nome'];
-                $msgContent['voucher']          = $codVoucher;
-                $msgContent['validade']         = $helper->dataBr($valDate);
+                $msgContent['endereco'      ] = $end_page;
+                $msgContent['nome'          ] = $nome;
+                $msgContent['email'         ] = $email;
+                $msgContent['telefone'      ] = $telefone;
+                $msgContent['periodo'       ] = $periodo;
+                $msgContent['curso'         ] = $rstCurso[0]['nome'];
+                $msgContent['especializacao'] = $rstEspecializacao[0]['nome'];
+                $msgContent['profissao'     ] = $rstProfissao[0]['nome'];
+                $msgContent['voucher'       ] = $codVoucher;
+                $msgContent['validade'      ] = $helper->dataBr($valDate);
                 #$mail->setMailTo($inputUnidade[0]['email']                ) # envio p/ unidade
                 $mail->setMailTo("sdcomputadores@gmail.com"                ) # envo p/ teste
                         ->setMailFrom("adriano.costa@grupolaunic.com.br"   ) # remetente  
@@ -212,19 +212,19 @@ if (isset($_GET['unidade'])) {
             $strProfissao .= "<option value=\"{$value['id']}\">" . utf8_encode($value['nome']) . "</option>";
         endforeach;
         $page = $template->getCadastro();
-        $page = str_replace("%ERROR-MSG%"            , ""                 , $page);
+        $page = str_replace("%ERROR-MSG%"            , ""                       , $page);
         $page = str_replace("%UNIDADE-ALIAS%"        , $inputUnidade[0]['alias'], $page);
-        $page = str_replace("%UNIDADE-ID%"           , $inputUnidade[0]['id'], $page);
+        $page = str_replace("%UNIDADE-ID%"           , $inputUnidade[0]['id']   , $page);
+        $page = str_replace("%NOME%"                 , ""                       , $page);
+        $page = str_replace("%EMAIL%"                , ""                       , $page);
+        $page = str_replace("%TELEFONE%"             , ""                       , $page);
+        $page = str_replace("%CURSO-SELECT%"         , $strCurso                , $page);
+        $page = str_replace("%ESPECIALIZACAO-SELECT%", $strEspecializacao       , $page);
+        $page = str_replace("%PROFISSAO-SELECT%"     , $strProfissao            , $page);
+        $page = str_replace("%CHECKED-M%"            , 'checked="checked"'      , $page);
+        $page = str_replace("%CHECKED-T%"            , ""                       , $page);
+        $page = str_replace("%CHECKED-N%"            , ""                       , $page);
         $page = str_replace("%DIVULGADOR-ID%"        , isset($inputDivulgador[0]['id']) ? $inputDivulgador[0]['id'] : 0, $page);
-        $page = str_replace("%NOME%"                 , ""                 , $page);
-        $page = str_replace("%EMAIL%"                , ""                 , $page);
-        $page = str_replace("%TELEFONE%"             , ""                 , $page);
-        $page = str_replace("%CURSO-SELECT%"         , $strCurso          , $page);
-        $page = str_replace("%ESPECIALIZACAO-SELECT%", $strEspecializacao , $page);
-        $page = str_replace("%PROFISSAO-SELECT%"     , $strProfissao      , $page);
-        $page = str_replace("%CHECKED-M%"            , 'checked="checked"', $page);
-        $page = str_replace("%CHECKED-T%"            , ""                 , $page);
-        $page = str_replace("%CHECKED-N%"            , ""                 , $page);
         echo $page;
     }
 }else {
