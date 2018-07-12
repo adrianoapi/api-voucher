@@ -15,20 +15,20 @@ $db = new Conn("localhost", "promo_cadastro", "root", "");
  * Instanciamento de das classes
  */
 $cliente       = new Cliente();
-$objCliente    = new ServiceCliente($db, $cliente);
 $divulgador    = new Divulgador();
-$objDivulgador = new ServiceDivulgador($db, $divulgador);
 $unidade       = new Unidade();
-$objUnidade    = new ServiceUnidade($db, $unidade);
 $curso         = new Curso();
-$objCurso      = new ServiceCurso($db, $curso);
 $profissao     = new Profissao();
-$objProfissao  = new ServiceProfissao($db, $profissao);
 $template      = new Template();
 $mail          = new SendMail();
-$objMail       = new ServiceSendMail($mail, $sndmail, $template);
 $helper        = new Helper();
 $geo           = new Geolocalizacao();
+$objCliente    = new ServiceCliente   ($db,   $cliente   );
+$objDivulgador = new ServiceDivulgador($db,   $divulgador);
+$objUnidade    = new ServiceUnidade   ($db,   $unidade   );
+$objCurso      = new ServiceCurso     ($db,   $curso     );
+$objProfissao  = new ServiceProfissao ($db,   $profissao );
+$objMail       = new ServiceSendMail  ($mail, $sndmail, $template);
 
 if (isset($_GET['unidade'])) {
     # Condição de tratamento do REQUEST divulgador
